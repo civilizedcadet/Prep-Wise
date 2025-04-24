@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prep Wise</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Basic style overrides or additions (can also be in style.css) */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light background */
+        }
+        /* Custom colors based on request */
+        :root {
+            --primary-navy: #0a2342; /* Navy Blue */
+            --accent-light-blue: #60a5fa; /* Lighter blue accent */
+            --accent-teal: #14b8a6; /* Teal accent */
+        }
+        .bg-primary-navy { background-color: var(--primary-navy); }
+        .text-primary-navy { color: var(--primary-navy); }
+        .border-primary-navy { border-color: var(--primary-navy); }
+        .bg-accent-light-blue { background-color: var(--accent-light-blue); }
+        .text-accent-light-blue { color: var(--accent-light-blue); }
+        .bg-accent-teal { background-color: var(--accent-teal); }
+        .text-accent-teal { color: var(--accent-teal); }
+
+        /* Subtle animation */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Style for webcam video */
+        #webcamFeed {
+            transform: scaleX(-1); /* Mirror the video feed */
+            border-radius: 0.5rem; /* Rounded corners */
+            border: 2px solid var(--primary-navy);
+        }
+        /* Loading spinner */
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid var(--primary-navy); /* Blue */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+        <header class="bg-primary-navy text-white p-6 rounded-lg shadow-md mb-8">
+            <h1 class="text-3xl font-bold text-center">Prep Wise</h1>
+            <p class="text-center text-gray-300 mt-1">Upload your resume and practice your interview skills!</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4 text-primary-navy border-b pb-2">1. Setup</h2>
+
+                <div class="mb-6">
+                    <label for="resumeUpload" class="block text-sm font-medium text-gray-700 mb-2">Upload Resume (.pdf, .docx, .txt):</label>
+                    <input type="file" id="resumeUpload" name="resume" accept=".pdf,.docx,.txt" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-accent-light-blue file:text-white hover:file:bg-blue-600 cursor-pointer border rounded-lg p-1">
+                    <button id="submitResume" class="mt-3 w-full bg-primary-navy text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition duration-200 font-medium disabled:opacity-50">Start Interview</button>
+                    <div id="uploadStatus" class="mt-2 text-sm text-gray-600"></div>
+                </div>
+
+                <div class="mb-4">
+                     <h3 class="text-lg font-semibold mb-2 text-primary-navy">Camera Feed</h3>
+                     <button id="startCamera" class="bg-accent-teal text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition duration-200 font-medium mb-2">Enable Camera</button>
+                     <div id="cameraError" class="text-red-600 text-sm mb-2"></div>
+                     <div class="relative aspect-video bg-gray-200 rounded-lg overflow-hidden border border-gray-300">
+                         <video id="webcamFeed" autoplay playsinline class="w-full h-full object-cover"></video>
+                         <div id="cameraLoading" class="absolute inset-0 flex items-center justify-center bg-gray-200 text-gray-500">Camera Disabled</div>
+                     </div>
+                </div>
+                 <div id="emotionStatus" class="mt-2 text-sm text-center font-medium">Emotion: <span id="detectedEmotion" class="text-primary-navy">...</span></div>
+            </div>
+
+            <div id="interviewArea" class="bg-white p-6 rounded-lg shadow-md hidden fade-in">
+                <h2 class="text-xl font-semibold mb-4 text-primary-navy border-b pb-2">2. Interview</h2>
+                <div id="loadingSpinner" class="loader hidden"></div>
+
+                <div id="questionDisplay" class="mb-6 p-4 bg-blue-50 border border-accent-light-blue rounded-lg min-h-[100px]">
+                    <p class="text-sm font-medium text-blue-700 mb-1">Question:</p>
+                    <p id="currentQuestion" class="text-lg text-primary-navy">Waiting for interview to start...</p>
+                </div>
+
+                <div id="interviewStatus" class="text-sm text-gray-600 mb-4"></div>
+
+                <div class="flex justify-center space-x-4">
+                     <button id="nextQuestionBtn" class="bg-primary-navy text-white py-2 px-5 rounded-lg hover:bg-opacity-90 transition duration-200 font-medium disabled:opacity-50" disabled>Next Question</button>
+                     </div>
+
+                 </div>
+
+        </div> <footer class="text-center text-gray-500 text-sm mt-12 pb-4">
+            AI Mock Interviewer &copy; 2025
+        </footer>
+
+    </div> <script src="script.js"></script>
+</body>
+</html>

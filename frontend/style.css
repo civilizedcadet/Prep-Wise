@@ -1,0 +1,60 @@
+/* frontend/style.css */
+
+/* You can add custom styles here if Tailwind isn't sufficient */
+/* For now, most styling is handled by Tailwind utility classes in index.html */
+
+/* Example: Add a specific style not easily done with Tailwind */
+/* .custom-gradient {
+    background: linear-gradient(to right, var(--primary-navy), var(--accent-teal));
+} */
+
+/* Ensure smooth scrolling if content overflows */
+body {
+    scroll-behavior: smooth;
+}
+
+/* Define CSS variables for colors (also defined in <style> tag in HTML for immediate use) */
+/* It's good practice to define them here as well for organization */
+:root {
+    --primary-navy: #0a2342; /* Navy Blue */
+    --accent-light-blue: #60a5fa; /* Lighter blue accent */
+    --accent-teal: #14b8a6; /* Teal accent */
+}
+
+/* Style for webcam video (also defined in <style> tag in HTML) */
+#webcamFeed {
+    transform: scaleX(-1); /* Mirror the video feed */
+    border-radius: 0.5rem; /* Rounded corners */
+    border: 2px solid var(--primary-navy);
+}
+
+/* Loading spinner animation (also defined in <style> tag in HTML) */
+.loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid var(--primary-navy); /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto; /* Center the spinner */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Helper class to hide elements (also defined in <style> tag in HTML) */
+.hidden {
+    display: none;
+}
+
+/* Subtle fade-in animation (also defined in <style> tag in HTML) */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
